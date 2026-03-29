@@ -165,7 +165,6 @@ if __name__ == "__main__":
         for i, future in enumerate(as_completed(futures)):
             result = future.result()
             results.append(result)
-            print(f"[{i+1}/{len(experiments)}] Finished seed {result['seed']} for config (lr={result['lr']}, net={result['network_size']}) -> Score: {result['curve'][-1][1]}")
 
             # Collect results into a df
             data = []
