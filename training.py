@@ -95,7 +95,7 @@ def train_agent(env, eval_env, agent, optimizer, criterion, gamma, epsilon, n_st
     return agent, learning_curve
 
 
-def evaluate_agent(agent, env, device="cpu", episodes=10):
+def evaluate_agent(agent, env, device="cpu", episodes=30):
     total_rewards = []
 
     for episode in range(episodes):
@@ -123,10 +123,10 @@ def evaluate_agent(agent, env, device="cpu", episodes=10):
 if __name__ == "__main__":
     # Hyperparameter ranges
     learning_rates = [0.0001, 0.001, 0.01, 0.1]
-    gammas = [0.8, 0.9, 0.99]
+    gammas = [0.8, 0.9, 0.95, 0.99]
     epsilons = [0.05, 0.1, 0.2]
     network_sizes = [64, 128, 256]
-    update_frequencies = [1, 4, 8]
+    update_frequencies = [1, 2, 4, 8]
 
     # across 5 seeds
     seeds = [67, 69, 420, 666, 69420]
@@ -164,22 +164,20 @@ if __name__ == "__main__":
 
         for i, future in enumerate(as_completed(futures)):
             result = future.result()
-            results.append(result)
 
             # Collect results into a df
             data = []
-            for result in results:
-                for step, score in result["curve"]:
-                    data.append({
-                        "Learning Rate": result["lr"],
-                        "Update Frequency": result["update_freq"],
-                        "Network Size": result["network_size"],
-                        "Gamma": result["gamma"],
-                        "Epsilon": result["epsilon"],
-                        "Seed": result["seed"],
-                        "Step": step,
-                        "Score": score
-                    })
+            for step, score in result["curve"]:
+                data.append({
+                    "Learning Rate": result["lr"],
+                    "Update Frequency": result["update_freq"],
+                    "Network Size": result["network_size"],
+                    "Gamma": result["gamma"],
+                    "Epsilon": result["epsilon"],
+                    "Seed": result["seed"],
+                    "Step": step,
+                    "Score": score
+                })
 
             df = pd.DataFrame(data)
 
