@@ -1,0 +1,7 @@
+Best found config:
+Learning Rate: 0.0001
+Update Frequency: 2.0
+Network Size: 128.0
+Gamma: 0.99
+Epsilon: 0.05
+Final Score: 499.0
